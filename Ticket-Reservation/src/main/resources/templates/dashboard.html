@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 800px;
+            min-height: 300px;
+            background-color: rgba(255, 255, 255, 0.85);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            border-radius: 12px;
+            padding: 20px;
+            position: relative;
+        }
+        .logo {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            width: 70px;
+            height: auto;
+        }
+        h1, h2 {
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #f4f4f4;
+            color: black;
+        }
+        td {
+            background-color: #f9f9f9;
+        }
+        .action-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        .btn {
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            border: 1px solid transparent;
+        }
+        .btn-primary {
+            background-color: white;
+            color: #007bff;
+            border: 1px solid #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #e6f0ff;
+        }
+        .btn-danger {
+            background-color: white;
+            color: red;
+            border: 1px solid red;
+        }
+        .btn-danger:hover {
+            background-color: #ffe6e6;
+        }
+        .small-btn {
+            padding: 8px 15px;
+            font-size: 16px;
+            background-color: green;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: auto;
+        }
+        .small-btn:hover {
+            background-color: darkgreen;
+        }
+        .navbar {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+        .navbar-right {
+            display: flex;
+            align-items: center;
+            margin-right: 60px;
+        }
+        .logout-container {
+            display: flex;
+            align-items: center;
+            background-color: #f5f5f5;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+            text-decoration: none;
+            font-size: 16px;
+            color: red;
+            font-weight: bold;
+            gap: 8px;
+            border: 1px solid #ddd;
+            margin-left: auto;
+        }
+        .logout-container:hover {
+            background-color: #e0e0e0;
+        }
+        .logout-icon {
+            font-size: 18px;
+            color: red;
+        }
+        .user-avatar {
+            width: 35px;
+            height: 35px;
+            background-color: #007bff;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            text-transform: uppercase;
+            margin-right: 10px;
+        }
+        .nav-btn {
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+        .nav-btn:disabled {
+            color: grey;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+<div class="navbar">
+    <div>
+        <button class="nav-btn" onclick="goBack()">⬅️ Back</button>
+        <button class="nav-btn" onclick="goNext()">➡️ Next</button>
+    </div>
+    <div class="navbar-right">
+        <div class="user-avatar" th:text="${#strings.substring(username, 0, 1)}"></div>
+        <a href="/logout" class="logout-container">
+            <span class="logout-icon">⏻</span> Log out
+        </a>
+    </div>
+</div>
+<div class="container">
+    <img src="/images/image.png" alt="BookYourShow Logo" class="logo">
+    <h1>Welcome, <span th:text="${username}"></span>!</h1>
+    <h2>Your Past Bookings</h2>
+    <div th:if="${bookings != null and bookings.size() > 0}">
+        <table border="1">
+            <thead>
+            <tr>
+                <th>Theater</th>
+                <th>Show Time</th>
+                <th>Seats</th>
+                <th>Total Amount</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="booking : ${bookings}">
+                <td th:text="${booking.theaterName}"></td>
+                <td th:text="${booking.showTime}"></td>
+                <td th:text="${booking.seatDetails}"></td>
+                <td th:text="${booking.totalAmount}"></td>
+                <td>
+                    <div class="action-container">
+                        <a th:href="@{/booking/edit/{id}(id=${booking.id})}" class="btn btn-primary">
+                            ✏️ Edit
+                        </a>
+                        <a th:href="@{/booking/cancel-confirmation/{id}(id=${booking.id})}" class="btn btn-danger">
+                            🗑️ Cancel
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:if="${bookings == null or bookings.size() == 0}">
+        <p>You have no bookings yet.</p>
+    </div>
+    <div style="margin-top: 20px; display: flex; justify-content: center; align-items: center; gap: 10px;">
+        <button class="nav-btn" th:if="${currentPage > 0}"
+                th:onclick="|window.location.href='@{/user/dashboard(page=${currentPage - 1})}'|">
+            ⬅️ Previous
+        </button>
+        <button class="nav-btn" th:if="${currentPage + 1 < totalPages}"
+                th:onclick="|window.location.href='@{/user/dashboard(page=${currentPage + 1})}'|">
+            ➡️ Next
+        </button>
+    </div>
+    <div class="button-container" style="margin-top: 20px;">
+        <a href="/movies" class="btn btn-success small-btn">Book Now</a>
+    </div>
+</div>
+<script>
+    function goBack() { window.history.back(); }
+    function goNext() { window.history.forward(); }
+</script>
+</body>
+</html>

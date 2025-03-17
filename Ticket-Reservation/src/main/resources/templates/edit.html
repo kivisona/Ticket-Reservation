@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Booking</title>
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background-color: #f4f4f4;
+        padding: 50px;
+    }
+    .container {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        width: 50%;
+        margin: auto;
+        position: relative;
+    }
+    .logo {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        width: 70px;
+        height: auto;
+    }
+    h2 {
+        color: #333;
+    }
+    .button-container {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+    }
+    .btn {
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 5px;
+        text-decoration: none;
+        color: white;
+    }
+    .btn-cancel {
+        background-color: #dc3545;
+    }
+    .btn-cancel:hover {
+        background-color: #c82333;
+    }
+    .btn-no {
+        background-color: #007bff;
+    }
+    .btn-no:hover {
+        background-color: #0056b3;
+    }
+  .navbar {
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        display: flex;
+        align-items: center;
+    }
+    .nav-btn {
+        background: none;
+        border: none;
+        font-size: 18px;
+        cursor: pointer;
+        margin: 0 5px;
+    }
+    .nav-btn:disabled {
+        color: grey;
+        cursor: not-allowed;
+    }
+  </style>
+  <script>
+    function goBack() {
+        window.history.back();
+    }
+    function goNext() {
+        window.history.forward();
+    }
+  </script>
+</head>
+<body>
+<div class="navbar">
+  <button class="nav-btn" onclick="goBack()">⬅️ Back</button>
+  <button class="nav-btn" onclick="goNext()">➡️ Next</button>
+</div>
+<div class="container">
+  <img src="/images/image.png" alt="BookYourShow Logo" class="logo">
+  <h2>You cannot edit this booking.</h2>
+  <p>If you wish to cancel, a charge of Rs. 50 will be deducted.</p>
+  <div class="button-container">
+    <a th:href="@{/booking/cancel/{id}(id=${booking.id})}" class="btn btn-cancel">Yes, Cancel</a>
+    <a th:href="@{/user/dashboard}" class="btn btn-no">No</a>
+  </div>
+</div>
+</body>
+</html>

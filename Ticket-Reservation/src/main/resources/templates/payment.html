@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Payment</title>
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        padding: 20px;
+        text-align: center;
+    }
+    .container {
+        width: 60%;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        position: relative;
+    }
+    .logo {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        width: 70px;
+        height: auto;
+    }
+    h2 {
+        font-size: 24px;
+    }
+    .payment-details {
+        margin-top: 20px;
+        text-align: left;
+        font-size: 16px;
+    }
+    .button-container {
+        margin-top: 20px;
+        text-align: center;
+    }
+    .pay-btn {
+        padding: 10px 20px;
+        background-color: #0070ba;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+    .pay-btn:hover {
+        background-color: #0056b3;
+    }
+    .error {
+        color: red;
+        font-weight: bold;
+    }
+  .navbar {
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        display: flex;
+        align-items: center;
+    }
+    .nav-btn {
+        background: none;
+        border: none;
+        font-size: 18px;
+        cursor: pointer;
+        margin: 0 5px;
+    }
+    .nav-btn:disabled {
+        color: grey;
+        cursor: not-allowed;
+    }
+  </style>
+  <script>
+    function goBack() {
+        window.history.back();
+    }
+    function goNext() {
+        window.history.forward();
+    }
+  </script>
+</head>
+<body>
+<div class="navbar">
+  <button class="nav-btn" onclick="goBack()">⬅️ Back</button>
+  <button class="nav-btn" onclick="goNext()">➡️ Next</button>
+</div>
+<div class="container">
+  <img src="/images/image.png" alt="BookYourShow Logo" class="logo">
+  <h2>Proceed with Your Payment</h2>
+  <div class="payment-details">
+    <p><strong>Username:</strong> <span th:text="${username}"></span></p>
+    <p><strong>Seat Details:</strong> <span th:text="${seatDetails}"></span></p>
+    <p><strong>Total Amount:</strong> ₹<span th:text="${totalAmount}"></span></p>
+    <p><strong>Tax (18%):</strong> ₹<span th:text="${taxAmount}"></span></p>
+    <p><strong>Final Amount:</strong> ₹<span th:text="${finalAmount}"></span></p>
+  </div>
+  <form th:action="@{/booking/pay}" method="post">
+    <input type="hidden" name="username" th:value="${username}">
+    <input type="hidden" name="totalAmount" th:value="${finalAmount}">
+    <input type="hidden" name="seatDetails" th:value="${seatDetails}">
+    <input type="hidden" name="theaterName" th:value="${theaterName}">
+    <input type="hidden" name="showTime" th:value="${showTime}">
+    <div class="button-container">
+      <button type="submit" class="pay-btn">Pay with PayPal</button>
+    </div>
+  </form>
+</div>
+</body>
+</html>

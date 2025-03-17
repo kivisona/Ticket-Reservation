@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Booking Confirmation</title>
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f4f4f4;
+    }
+    .container {
+        width: 600px;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        position: relative;
+    }
+    .logo {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        width: 70px;
+        height: auto;
+    }
+    h2 {
+        margin-bottom: 20px;
+        font-size: 24px;
+    }
+    table {
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: collapse;
+    }
+    th, td {
+        border: 1px solid #ccc;
+        padding: 10px;
+        text-align: left;
+    }
+    th, td {
+        background-color: #f9f9f9;
+    }
+    .button-container {
+        margin-top: 20px;
+        text-align: center;
+    }
+    .back-btn, .dashboard-btn {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        text-decoration: none;
+        margin: 5px;
+    }
+    .back-btn:hover, .dashboard-btn:hover {
+        background-color: #0056b3;
+    }
+  .navbar {
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        display: flex;
+        align-items: center;
+    }
+    .nav-btn {
+        background: none;
+        border: none;
+        font-size: 18px;
+        cursor: pointer;
+        margin: 0 5px;
+    }
+    .nav-btn:disabled {
+        color: grey;
+        cursor: not-allowed;
+    }
+  </style>
+  <script>
+    function goBack() {
+        window.history.back();
+    }
+    function goNext() {
+        window.history.forward();
+    }
+  </script>
+</head>
+<body>
+<div class="navbar">
+  <button class="nav-btn" onclick="goBack()">⬅️ Back</button>
+  <button class="nav-btn" onclick="goNext()">➡️ Next</button>
+</div>
+<div class="container">
+  <img src="/images/image.png" alt="BookYourShow Logo" class="logo">
+  <h2>Booking Confirmed!</h2>
+  <div th:if="${booking != null}">
+    <p>Thank you for your booking, <span th:text="${booking.username}"></span>!</p>
+    <table>
+      <tr>
+        <th>Theater</th>
+        <td th:text="${booking.theaterName}"></td>
+      </tr>
+      <tr>
+        <th>Show Time</th>
+        <td th:text="${booking.showTime}"></td>
+      </tr>
+      <tr>
+        <th>Seats</th>
+        <td th:text="${booking.seatDetails}"></td>
+      </tr>
+      <tr>
+        <th>Total Amount</th>
+        <td th:text="'₹' + ${booking.totalAmount}"></td>
+      </tr>
+    </table>
+  </div>
+  <div th:if="${booking == null}">
+    <p style="color: red;">There was an error with your booking. Please try again.</p>
+  </div>
+  <div class="button-container">
+    <a href="/" class="back-btn">Back to Home</a>
+    <a href="/user/dashboard" class="dashboard-btn">Dashboard</a>
+  </div>
+</div>
+</body>
+</html>
