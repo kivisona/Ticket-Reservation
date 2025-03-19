@@ -1,18 +1,23 @@
 #!/bin/bash
 echo "Installing Java 23..."
 
-# Create installation directory
-mkdir -p /opt/java-23
+# Set installation directory (must be writable)
+INSTALL_DIR="$HOME/java-23"
 
-# Download Java 23 from a working source
-wget https://download.bell-sw.com/java/23/bellsoft-jdk23-linux-amd64.tar.gz -O java23.tar.gz
+# Create directory
+mkdir -p $INSTALL_DIR
+
+# Download Java 23 from OpenJDK early access
+wget https://download.java.net/java/early_access/jdk23/23/GPL/openjdk-23_linux-x64_bin.tar.gz -O java23.tar.gz
 
 # Extract Java
-tar -xzf java23.tar.gz -C /opt/java-23 --strip-components=1
+tar -xzf java23.tar.gz -C $INSTALL_DIR --strip-components=1
 
 # Set JAVA_HOME
-export JAVA_HOME=/opt/java-23
+export JAVA_HOME=$INSTALL_DIR
 export PATH=$JAVA_HOME/bin:$PATH
 
-echo "Java 23 installed successfully!"
+# Verify installation
 java -version
+
+echo "Java 23 installed successfully!"
