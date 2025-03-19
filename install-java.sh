@@ -1,17 +1,17 @@
 #!/bin/bash
-echo "Installing Java 23..."
+echo "Installing Java 21 (LTS)..."
 
-# Set installation directory (must be writable)
-INSTALL_DIR="$HOME/java-23"
+# Set installation directory
+INSTALL_DIR="$HOME/java-21"
 
 # Create directory
 mkdir -p $INSTALL_DIR
 
-# Download Java 23 from OpenJDK early access
-wget https://download.java.net/java/early_access/jdk23/23/GPL/openjdk-23_linux-x64_bin.tar.gz -O java23.tar.gz
+# Download Java 21 from Adoptium (Stable & LTS)
+wget https://github.com/adoptium/temurin21-binaries/releases/latest/download/OpenJDK21U-jdk_x64_linux_hotspot.tar.gz -O java21.tar.gz
 
 # Extract Java
-tar -xzf java23.tar.gz -C $INSTALL_DIR --strip-components=1
+tar -xzf java21.tar.gz -C $INSTALL_DIR --strip-components=1
 
 # Set JAVA_HOME
 export JAVA_HOME=$INSTALL_DIR
@@ -20,4 +20,4 @@ export PATH=$JAVA_HOME/bin:$PATH
 # Verify installation
 java -version
 
-echo "Java 23 installed successfully!"
+echo "Java 21 installed successfully!"
