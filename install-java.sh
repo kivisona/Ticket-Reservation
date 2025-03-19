@@ -7,8 +7,8 @@ INSTALL_DIR="$HOME/java-21"
 # Create directory
 mkdir -p $INSTALL_DIR
 
-# Download Java 21 from Adoptium (Stable & LTS)
-wget https://github.com/adoptium/temurin21-binaries/releases/latest/download/OpenJDK21U-jdk_x64_linux_hotspot.tar.gz -O java21.tar.gz
+# Download Java 21 from Adoptium API
+wget https://api.adoptium.net/v3/binary/latest/21/ga/linux/x64/jdk/hotspot/normal/eclipse -O java21.tar.gz
 
 # Extract Java
 tar -xzf java21.tar.gz -C $INSTALL_DIR --strip-components=1
